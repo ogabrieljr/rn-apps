@@ -6,6 +6,7 @@ import DetailsScreen from "./src/Screens/DetailsScreen";
 import LogoTitle from "./src/LogoTitle";
 import ProfileScreen from "./src/Screens/ProfileScreen";
 import CreatePostScreen from "./src/Screens/CreatePostScreen";
+import { Button } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,9 @@ function App() {
             headerTitleStyle: {
               fontWeight: "bold",
             },
+            headerLeft: () => (
+              <Button title="Info" color="white" onPress={() => alert("Info!")} />
+            ),
           }}
           name="Home"
           component={HomeScreen}

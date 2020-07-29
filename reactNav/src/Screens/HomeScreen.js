@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 
 export default function HomeScreen({ navigation, route }) {
+  const [count, setCount] = useState(0);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          color="white"
+          title="Add"
+          onPress={() => setCount(count => count + 1)}
+        />
+      ),
+    });
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
+      <Text>{count}</Text>
       <Text style={styles.post}>{route.params?.post}</Text>
       <Button
         title="Details"
