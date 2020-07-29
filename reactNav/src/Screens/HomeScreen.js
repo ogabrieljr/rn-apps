@@ -37,6 +37,7 @@ export default function HomeScreen({ navigation, route }) {
         onPress={() => navigation.navigate("Create post")}
       />
       <Button onPress={() => navigation.navigate("MyModal")} title="Open Modal" />
+      <Button onPress={() => navigation.navigate("Tabs Screen")} title="Open Tabs" />
     </View>
   );
 }
