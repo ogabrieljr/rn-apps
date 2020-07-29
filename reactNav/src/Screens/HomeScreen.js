@@ -6,6 +6,9 @@ export default function HomeScreen({ navigation, route }) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerLeft: () => (
+        <Button title="Info" color="white" onPress={() => alert("Info!")} />
+      ),
       headerRight: () => (
         <Button
           color="white"
@@ -33,6 +36,7 @@ export default function HomeScreen({ navigation, route }) {
         title="Create post"
         onPress={() => navigation.navigate("Create post")}
       />
+      <Button onPress={() => navigation.navigate("MyModal")} title="Open Modal" />
     </View>
   );
 }

@@ -6,7 +6,7 @@ import DetailsScreen from "./src/Screens/DetailsScreen";
 import LogoTitle from "./src/LogoTitle";
 import ProfileScreen from "./src/Screens/ProfileScreen";
 import CreatePostScreen from "./src/Screens/CreatePostScreen";
-import { Button } from "react-native";
+import ModalScreen from "./src/Screens/ModalScreen";
 
 const Stack = createStackNavigator();
 
@@ -35,9 +35,6 @@ function App() {
             headerTitleStyle: {
               fontWeight: "bold",
             },
-            headerLeft: () => (
-              <Button title="Info" color="white" onPress={() => alert("Info!")} />
-            ),
           }}
           name="Home"
           component={HomeScreen}
@@ -53,6 +50,11 @@ function App() {
           options={({ route }) => ({ title: route.params.name })}
         />
         <Stack.Screen name="Create post" component={CreatePostScreen} />
+        <Stack.Screen
+          name="MyModal"
+          options={{ headerShown: false }}
+          component={ModalScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
