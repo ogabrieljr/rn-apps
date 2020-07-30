@@ -7,7 +7,7 @@ import LogoTitle from "./src/LogoTitle";
 import ProfileScreen from "./src/Screens/ProfileScreen";
 import CreatePostScreen from "./src/Screens/CreatePostScreen";
 import ModalScreen from "./src/Screens/ModalScreen";
-import TabsScreen from "./src/Screens/Tabs/TabsScreen";
+import TabsScreen from "./src/Screens/Tabs/Screens/TabsScreen";
 
 const Stack = createStackNavigator();
 
