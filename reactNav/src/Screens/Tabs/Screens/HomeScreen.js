@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
-import { selectCount, increment, decrement } from "../redux/counterSlice";
+import { selectCount, increment, decrement } from "../../../redux/counterSlice";
 
 export default function HomeScreen({ navigation }) {
   const count = useSelector(selectCount);

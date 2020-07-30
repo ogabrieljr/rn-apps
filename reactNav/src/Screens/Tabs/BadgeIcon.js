@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { selectCount } from "./redux/counterSlice";
+import { selectCount } from "../../redux/counterSlice";
 import { useSelector } from "react-redux";
 
 function IconWithBadge({ name, badgeCount, color, size }) {

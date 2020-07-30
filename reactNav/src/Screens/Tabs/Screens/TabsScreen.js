@@ -6,7 +6,7 @@ import SettingsScreen from "./SettingsScreen";
 import { Ionicons } from "@expo/vector-icons";
 import HomeIconWithBadge from "../BadgeIcon";
 import { Provider } from "react-redux";
-import store from "../redux/store";
+import store from "../../../redux/store";
 
 const Tab = createBottomTabNavigator();
 
