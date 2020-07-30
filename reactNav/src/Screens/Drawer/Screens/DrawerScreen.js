@@ -8,7 +8,7 @@ const Drawer = createDrawerNavigator();
 export default function DrawerScreen() {
   return (
     <Drawer.Navigator
-      openByDefault
+      // openByDefault
       drawerContentOptions={{
         activeTintColor: "#e91e63",
         itemStyle: { marginVertical: 7 },

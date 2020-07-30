@@ -11,8 +11,8 @@ export default function HomeScreen({ navigation, route }) {
       ),
       headerRight: () => (
         <Button
-          color="white"
           title="Add"
+          color="white"
           onPress={() => setCount(count => count + 1)}
         />
       ),
@@ -36,12 +36,13 @@ export default function HomeScreen({ navigation, route }) {
         title="Create post"
         onPress={() => navigation.navigate("Create post")}
       />
-      <Button onPress={() => navigation.navigate("MyModal")} title="Open Modal" />
-      <Button onPress={() => navigation.navigate("Tabs Screen")} title="Open Tabs" />
+      <Button title="Open Modal" onPress={() => navigation.navigate("MyModal")} />
+      <Button title="Open Tabs" onPress={() => navigation.navigate("Tabs Screen")} />
       <Button
-        onPress={() => navigation.navigate("Drawer Screen")}
         title="Open Drawer"
+        onPress={() => navigation.navigate("Drawer Screen")}
       />
+      <Button title="Log in" onPress={() => navigation.navigate("Log in")} />
     </View>
   );
 }
