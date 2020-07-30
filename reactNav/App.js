@@ -8,6 +8,7 @@ import ProfileScreen from "./src/Screens/ProfileScreen";
 import CreatePostScreen from "./src/Screens/CreatePostScreen";
 import ModalScreen from "./src/Screens/ModalScreen";
 import TabsScreen from "./src/Screens/Tabs/Screens/TabsScreen";
+import DrawerScreen from "./src/Screens/Drawer/Screens/DrawerScreen";
 
 const Stack = createStackNavigator();
 
@@ -61,6 +62,7 @@ function App() {
           options={{ headerShown: false }}
           component={TabsScreen}
         />
+        <Stack.Screen name="Drawer Screen" component={DrawerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
