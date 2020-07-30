@@ -1,6 +1,8 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { selectCount } from "./redux/counterSlice";
+import { useSelector } from "react-redux";
 
 function IconWithBadge({ name, badgeCount, color, size }) {
   return (
@@ -9,7 +11,6 @@ function IconWithBadge({ name, badgeCount, color, size }) {
       {badgeCount > 0 && (
         <View
           style={{
-            // On React Native < 0.57 overflow outside of parent will not work on Android, see https://git.io/fhLJ8
             position: "absolute",
             right: -6,
             top: -3,
@@ -30,6 +31,6 @@ function IconWithBadge({ name, badgeCount, color, size }) {
 }
 
 export default function HomeIconWithBadge(props) {
-  // You should pass down the badgeCount in some other ways like React Context API, Redux, MobX or event emitters.
-  return <IconWithBadge {...props} badgeCount={3} />;
+  const count = useSelector(selectCount);
+  return <IconWithBadge {...props} badgeCount={count} />;
 }
