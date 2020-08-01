@@ -33,7 +33,31 @@ app.get("/users", (req, res) => {
 });
 
 //create
+app.post("/users/create", (req, res) => {
+  const { name, status } = req.body;
+  connection.query("insert into users set ?", { name, status }, (error, results) => {
+    res.send(results);
+  });
+});
 
 //update
+app.put("/users/update", (req, res) => {
+  const { id, status } = req.body;
+  connection.query(
+    "update users set status = ? where id = ?",
+    [status, id],
+    (error, results) => {
+      if (error) throw error;
+      res.send(results);
+    }
+  );
+});
 
 //delete
+app.delete("/users/delete", (req, res) => {
+  const { id } = req.body;
+  connection.query("delete from users where id = ?", [id], (error, results) => {
+    if (error) throw error;
+    res.send(results);
+  });
+});
