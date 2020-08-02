@@ -36,6 +36,7 @@ app.get("/users", (req, res) => {
 app.post("/users/create", (req, res) => {
   const { name, status } = req.body;
   connection.query("insert into users set ?", { name, status }, (error, results) => {
+    if (error) throw error;
     res.send(results);
   });
 });
