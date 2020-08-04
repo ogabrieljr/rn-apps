@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, Button, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Button,
+  ScrollView,
+  FlatList,
+  TextInput,
+} from "react-native";
 import { connect } from "react-redux";
-import { requestData, receiveDataSuccess } from "./redux/actions";
+import { requestData, receiveDataSuccess, receiveDataFailed } from "./redux/actions";
 import axios from "axios";
-import { FlatList, TextInput } from "react-native-gesture-handler";
 
 const ROOT_ENDPOINT = "http://192.168.1.8:3001";
 
-function List({ requestData, receiveDataSuccess, isFetching, users }) {
-  const [status, setStatus] = useState("");
+function List({
+  requestData,
+  receiveDataSuccess,
+  isFetching,
+  users,
+  receiveDataFailed,
+}) {
+  const [status] = useState([]);
 
   useEffect(() => {
     requestData();
@@ -17,8 +29,10 @@ function List({ requestData, receiveDataSuccess, isFetching, users }) {
       .then(response => {
         receiveDataSuccess(response.data);
       })
-      .catch(function (error) {
+      .catch(error => {
         console.log(error);
+        alert("Try again");
+        receiveDataFailed();
       });
   }, []);
 
@@ -30,28 +44,37 @@ function List({ requestData, receiveDataSuccess, isFetching, users }) {
           id,
         },
       })
-
-      .then(function (response) {
-        receiveDataSuccess(response.data);
-      })
-      .catch(function (error) {
+      .then(response => receiveDataSuccess(response.data))
+      .catch(error => {
         console.log(error);
+        alert("Try again");
+        receiveDataFailed();
       });
   };
 
-  const updateStatus = id => {
-    requestData();
-    axios
-      .put(ROOT_ENDPOINT + "/users/update", {
-        id,
-        status,
-      })
-      .then(function (response) {
-        receiveDataSuccess(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const updateStatus = (id, index) => {
+    if (status[index]) {
+      if (status[index].length > 10) alert("Status too long");
+      else {
+        axios
+          .put(ROOT_ENDPOINT + "/users/update", {
+            id,
+            status: status[index],
+          })
+          .then(response => {
+            if (typeof response.data === "string") alert(response.data);
+            else {
+              requestData();
+              receiveDataSuccess(response.data);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            alert("Try again");
+            receiveDataFailed();
+          });
+      }
+    } else alert("Submit a status.");
   };
 
   return (
@@ -62,17 +85,17 @@ function List({ requestData, receiveDataSuccess, isFetching, users }) {
         <FlatList
           data={users}
           keyExtractor={user => user.id.toString()}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <ScrollView>
               <Text>
                 {item.name} : {item.status}
               </Text>
               <TextInput
-                onChangeText={setStatus}
+                onChangeText={text => (status[index] = text)}
                 placeholder="Update status"
                 style={{ borderWidth: 1 }}
               />
-              <Button title="Update" onPress={() => updateStatus(item.id)} />
+              <Button title="Update" onPress={() => updateStatus(item.id, index)} />
               <Button title="Delete" onPress={() => deleteUser(item.id)} />
             </ScrollView>
           )}
@@ -85,6 +108,7 @@ function List({ requestData, receiveDataSuccess, isFetching, users }) {
 const dispatch = {
   requestData,
   receiveDataSuccess,
+  receiveDataFailed,
 };
 
 const state = state => ({

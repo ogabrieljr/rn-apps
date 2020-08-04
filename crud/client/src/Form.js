@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, View, Button } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import {
   changeName,
@@ -9,6 +8,7 @@ import {
   initializeForm,
   receiveDataFailed,
   requestData,
+  TextInput,
 } from "./redux/actions";
 import axios from "axios";
 
@@ -31,10 +31,12 @@ function Form({
       })
       .then(response => {
         initializeForm();
-        requestData();
-        receiveDataSuccess(response.data);
+        if (typeof response.data === "string") alert(response.data);
+        else {
+          requestData();
+          receiveDataSuccess(response.data);
+        }
       })
-
       .catch(error => {
         console.log(error);
         alert("Try again");

@@ -35,29 +35,48 @@ app.get("/users", (req, res) => {
 //create
 app.post("/users/create", (req, res) => {
   const { name, status } = req.body;
-  connection.query("insert into users set ?", { name, status }, (error, results) => {
-    if (error) throw error;
-    connection.query("select * from users", (error, results, fields) => {
-      if (error) throw error;
-      res.send(results);
-    });
-  });
+  connection.query(
+    "select name from users where name = ?",
+    [name],
+    (error, results) => {
+      if (results.length) return res.send("Name taken.");
+      if (name.length < 3) return res.send("Name's too short.");
+      if (!status.length) return res.send("Submit a status.");
+      else {
+        connection.query(
+          "insert into users set ?",
+          { name, status },
+          (error, results) => {
+            if (error) throw error;
+            connection.query("select * from users", (error, results, fields) => {
+              if (error) throw error;
+              return res.send(results);
+            });
+          }
+        );
+      }
+    }
+  );
 });
 
 //update
 app.put("/users/update", (req, res) => {
   const { id, status } = req.body;
-  connection.query(
-    "update users set status = ? where id = ?",
-    [status, id],
-    (error, results) => {
-      if (error) throw error;
-      connection.query("select * from users", (error, results, fields) => {
+  if (!status.length) return res.send("Submit a status.");
+  if (status.length > 10) return res.send("Status too long");
+  else {
+    connection.query(
+      "update users set status = ? where id = ?",
+      [status, id],
+      (error, results) => {
         if (error) throw error;
-        res.send(results);
-      });
-    }
-  );
+        connection.query("select * from users", (error, results, fields) => {
+          if (error) throw error;
+          res.send(results);
+        });
+      }
+    );
+  }
 });
 
 //delete
