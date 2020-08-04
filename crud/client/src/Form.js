@@ -32,15 +32,9 @@ function Form({
       .then(response => {
         initializeForm();
         requestData();
-        axios
-          .get(ROOT_ENDPOINT + "/users")
-          .then(response => {
-            receiveDataSuccess(response.data);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        receiveDataSuccess(response.data);
       })
+
       .catch(error => {
         console.log(error);
         alert("Try again");

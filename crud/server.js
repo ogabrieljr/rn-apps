@@ -37,7 +37,10 @@ app.post("/users/create", (req, res) => {
   const { name, status } = req.body;
   connection.query("insert into users set ?", { name, status }, (error, results) => {
     if (error) throw error;
-    res.send(results);
+    connection.query("select * from users", (error, results, fields) => {
+      if (error) throw error;
+      res.send(results);
+    });
   });
 });
 
@@ -49,7 +52,10 @@ app.put("/users/update", (req, res) => {
     [status, id],
     (error, results) => {
       if (error) throw error;
-      res.send(results);
+      connection.query("select * from users", (error, results, fields) => {
+        if (error) throw error;
+        res.send(results);
+      });
     }
   );
 });
@@ -59,6 +65,9 @@ app.delete("/users/delete", (req, res) => {
   const { id } = req.body;
   connection.query("delete from users where id = ?", [id], (error, results) => {
     if (error) throw error;
-    res.send(results);
+    connection.query("select * from users", (error, results, fields) => {
+      if (error) throw error;
+      res.send(results);
+    });
   });
 });
